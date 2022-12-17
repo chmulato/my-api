@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MyApiApplication {
+public class ChecklistApiApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(MyApiApplication.class, args);
+		SpringApplication.run(ChecklistApiApplication.class, args);
 	}
 
 }
