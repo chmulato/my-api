@@ -14,7 +14,7 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-@Entity
+@Entity(name="ChecklistItem")
 @Table(indexes = { @Index(name = "IDX_GUID_CHK", columnList = "guid")})
 public class ChecklistItemEntity extends BaseEntity {
     
