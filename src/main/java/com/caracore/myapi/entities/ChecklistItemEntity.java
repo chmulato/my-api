@@ -1,6 +1,6 @@
 package com.caracore.myapi.entities;
 
-import java.time.LocalTime;
+import java.time.LocalDate;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,9 +26,9 @@ public class ChecklistItemEntity extends BaseEntity {
 
     private Boolean isCompleted;
 
-    private LocalTime deadline;
+    private LocalDate deadline;
 
-    private LocalTime postedDate;
+    private LocalDate postedDate;
 
     @ManyToOne
     private CategoryEntity category;
