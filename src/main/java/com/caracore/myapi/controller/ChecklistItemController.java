@@ -58,8 +58,8 @@ public class ChecklistItemController {
     @PutMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> updateChecklistItem(@RequestBody ChecklistItemDTO checklistItemDTO) {
 
-        if (!StringUtils.hasLength(checklistItemDTO.getGuid())) {
-            throw new ValidationException("Checklist item is mandatory");
+        if (!StringUtils.hasText(checklistItemDTO.getGuid())) {
+            throw new ValidationException("Checklist item guid cannot be empty or null");
         }
 
         this.checklistItemService.updateChecklistItem(checklistItemDTO.getGuid(), checklistItemDTO.getDescription(),
