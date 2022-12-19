@@ -24,7 +24,7 @@ import com.caracore.myapi.service.CategoryService;
 import jakarta.validation.ValidationException;
 
 @RestController
-@RequestMapping("/api/v1/categories")
+@RequestMapping("/categories")
 public class CategoryController {
 
     private CategoryService categoryService;

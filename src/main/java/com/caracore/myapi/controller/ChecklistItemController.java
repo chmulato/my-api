@@ -23,7 +23,7 @@ import com.caracore.myapi.exception.ValidationException;
 import com.caracore.myapi.service.ChecklistItemService;
 
 @RestController
-@RequestMapping("/api/v1/checklist-items")
+@RequestMapping("/checklist-items")
 public class ChecklistItemController {
 
     private ChecklistItemService checklistItemService;

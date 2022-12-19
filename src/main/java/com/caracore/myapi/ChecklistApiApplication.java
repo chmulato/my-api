@@ -25,7 +25,7 @@ public class ChecklistApiApplication {
 			CategoryEntity cat01 = new CategoryEntity();
 			cat01.setCategoryId(1L);
 			cat01.setGuid("aaa-bbb-ccc-dddd");
-			cat01.setName("Saúde");
+			cat01.setName("Saude");
 			
 			categoryRepository.save(cat01);
 
