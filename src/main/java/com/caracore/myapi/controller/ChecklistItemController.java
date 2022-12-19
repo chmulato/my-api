@@ -38,8 +38,7 @@ public class ChecklistItemController {
         List<ChecklistItemDTO> resp = StreamSupport.stream(this.checklistItemService.findAllChecklistItems().spliterator(), false)
         .map(checklistItemEntity -> ChecklistItemDTO.toDTO(checklistItemEntity)).collect(Collectors.toList());
 
-        return new ResponseEntity<>(resp, HttpStatus.OK);
-    
+        return new ResponseEntity<>(resp, HttpStatus.OK);   
     }
 
     @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -53,8 +52,7 @@ public class ChecklistItemController {
             checklistItemDTO.getDescription(), checklistItemDTO.getIsCompleted(),
             checklistItemDTO.getDeadline(), checklistItemDTO.getCategory().getGuid());
 
-        return new ResponseEntity<>(newChecklistItem.getGuid(), HttpStatus.CREATED);
-    
+        return new ResponseEntity<>(newChecklistItem.getGuid(), HttpStatus.CREATED);   
     }
 
     @PutMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -66,7 +64,7 @@ public class ChecklistItemController {
 
         this.checklistItemService.updateChecklistItem(checklistItemDTO.getGuid(), checklistItemDTO.getDescription(),
             checklistItemDTO.getIsCompleted(), checklistItemDTO.getDeadline(),
-            checklistItemDTO.getCategory() != null ? checklistItemDTO.getCategory().getGuid() : null)
+            checklistItemDTO.getCategory() != null ? checklistItemDTO.getCategory().getGuid() : null);
         
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
