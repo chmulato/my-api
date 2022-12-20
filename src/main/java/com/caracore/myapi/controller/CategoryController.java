@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.caracore.myapi.dto.CategoryDTO;
+import com.caracore.myapi.dto.GuidDTO;
 import com.caracore.myapi.entities.CategoryEntity;
 import com.caracore.myapi.service.CategoryService;
 
@@ -45,11 +46,11 @@ public class CategoryController {
     }
 
     @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> addnewCategory(@RequestBody CategoryDTO categoryDTO) {
+    public ResponseEntity<GuidDTO> addnewCategory(@RequestBody CategoryDTO categoryDTO) {
 
         CategoryEntity newCategory = this.categoryService.addNewCategory(categoryDTO.getName());
 
-        return new ResponseEntity<>(newCategory.getGuid(), HttpStatus.CREATED);   
+        return new ResponseEntity<>(new GuidDTO(newCategory.getGuid()), HttpStatus.CREATED);   
     }
 
     @PutMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)

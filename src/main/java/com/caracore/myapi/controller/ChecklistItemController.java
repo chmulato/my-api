@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.caracore.myapi.dto.ChecklistItemDTO;
+import com.caracore.myapi.dto.GuidDTO;
 import com.caracore.myapi.entities.ChecklistItemEntity;
 import com.caracore.myapi.exception.ValidationException;
 import com.caracore.myapi.service.ChecklistItemService;
@@ -42,7 +43,7 @@ public class ChecklistItemController {
     }
 
     @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> createNewChecklistItem(@RequestBody ChecklistItemDTO checklistItemDTO) {
+    public ResponseEntity<GuidDTO> createNewChecklistItem(@RequestBody ChecklistItemDTO checklistItemDTO) {
 
         if (checklistItemDTO.getCategory() == null) {
             throw new ValidationException("Category cannot null");
@@ -52,7 +53,7 @@ public class ChecklistItemController {
             checklistItemDTO.getDescription(), checklistItemDTO.getIsCompleted(),
             checklistItemDTO.getDeadline(), checklistItemDTO.getCategory().getGuid());
 
-        return new ResponseEntity<>(newChecklistItem.getGuid(), HttpStatus.CREATED);   
+        return new ResponseEntity<>(new GuidDTO(newChecklistItem.getGuid()), HttpStatus.CREATED);   
     }
 
     @PutMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
