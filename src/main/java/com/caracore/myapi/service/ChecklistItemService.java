@@ -144,18 +144,24 @@ public class ChecklistItemService {
     public void updateIsCompleteStatus(String guid, boolean isComplete) {
 
         if (!StringUtils.hasText(guid)) {
-            throw new IllegalArgumentException("Guid cannot be empty or null");
+            throw new IllegalArgumentException("Guid category cannot be empty or null");
         }
 
-        ChecklistItemEntity retrievedItem = this.checklistItemRepository.findByGuid(guid)
-        .orElseThrow(() -> new ResourceNotFoundException("Checklist Item not found"));
+        Optional <ChecklistItemEntity> retrievedItem = this.checklistItemRepository.findByGuid(guid);
 
-        log.debug("Updating checklist item completed status [ guid = {}, isComplete = {} ]", guid, isComplete);
+        if (retrievedItem.isPresent()) {
+            
+            ChecklistItemEntity checklistItemEntity = retrievedItem.get();
 
-        retrievedItem.setIsCompleted(isComplete);
+            log.debug("Updating checklist item completed status [ guid = {}, isComplete = {} ]", guid, isComplete);
 
-        this.checklistItemRepository.save(retrievedItem);
+            checklistItemEntity.setIsCompleted(isComplete);
     
+            this.checklistItemRepository.save(checklistItemEntity);
+    
+        } else {
+            throw new ResourceNotFoundException("Checklist Item not found");
+        }
     }
 
 }
