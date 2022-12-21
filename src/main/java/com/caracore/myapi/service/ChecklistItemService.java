@@ -2,11 +2,13 @@ package com.caracore.myapi.service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import com.caracore.myapi.dto.CategoryDTO;
 import com.caracore.myapi.entities.CategoryEntity;
 import com.caracore.myapi.entities.ChecklistItemEntity;
 import com.caracore.myapi.exception.ResourceNotFoundException;
@@ -47,7 +49,7 @@ public class ChecklistItemService {
 
     }
 
-    public ChecklistItemEntity updateChecklistItem(String guid, String description, Boolean isCompleted, LocalDate deadline, String categoryGuid) {
+    public ChecklistItemEntity updateChecklistItem(String guid, String description, Boolean isCompleted, LocalDate deadline, CategoryDTO categoryDTO) {
 
         if (!StringUtils.hasText(guid)) {
             throw new IllegalArgumentException("Guid cannot be empty or null");
@@ -68,15 +70,22 @@ public class ChecklistItemService {
             retrievedItem.setDeadline(deadline);
         }
 
-        if (!StringUtils.hasText(categoryGuid)) {
+        String guidCategory = categoryDTO.getGuid();
 
-            CategoryEntity retrievedCategory = this.categoryRepository.findByGuid(categoryGuid)
-            .orElseThrow(() -> new ResourceNotFoundException("category not found"));
+        if (StringUtils.hasText(guidCategory)) {
 
-            retrievedItem.setCategory(retrievedCategory);
+            Optional<CategoryEntity> retrievedCategory = this.categoryRepository.findByGuid(guidCategory);
+
+            if (retrievedCategory.isPresent()) {
+                retrievedItem.setCategory(retrievedCategory.get());
+            }
+            else {
+                throw new ResourceNotFoundException("Category not found");
+            }
+        
         }
 
-        log.debug("Updating checklist item [ checklistItem = {}", retrievedItem.toString());
+        log.debug("Updating checklist item [ checklistItem = {} ]", retrievedItem);
 
         return checklistItemRepository.save(retrievedItem);
     

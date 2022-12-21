@@ -67,7 +67,7 @@ public class ChecklistItemController {
 
         this.checklistItemService.updateChecklistItem(checklistItemDTO.getGuid(), checklistItemDTO.getDescription(),
             checklistItemDTO.getIsCompleted(), checklistItemDTO.getDeadline(),
-            checklistItemDTO.getCategory() != null ? checklistItemDTO.getCategory().getGuid() : null);
+            checklistItemDTO.getCategory());
         
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
