@@ -21,7 +21,7 @@ public class MyApiApplication {
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/**")
 					.allowedOrigins("http://localhost:4200")
-					.allowedMethods("GET", "PUT", "OPTIONS", "POST", "DELETE")
+					.allowedMethods("GET", "PUT", "OPTIONS", "POST", "DELETE", "PATCH")
 					.maxAge(900)
 					.allowedHeaders("Origin", "X-Requested-With", "Content-Type", "Accept", "Authorization");
 			}

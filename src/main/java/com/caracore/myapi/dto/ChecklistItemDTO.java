@@ -2,7 +2,6 @@ package com.caracore.myapi.dto;
 
 import java.time.LocalDate;
 
-import com.caracore.myapi.entities.CategoryEntity;
 import com.caracore.myapi.entities.ChecklistItemEntity;
 
 import jakarta.validation.constraints.NotBlank;
@@ -25,16 +24,22 @@ public class ChecklistItemDTO {
     @NotNull(message = "Deadline is mandatory")
     private LocalDate deadline;
 
-    @NotBlank(message = "Category cannot be either null or empty")
-    private CategoryEntity Category;
+    private LocalDate postedDate;
+
+    private CategoryDTO category;
 
     public static ChecklistItemDTO toDTO(ChecklistItemEntity checklistItemEntity) {
         return ChecklistItemDTO.builder()
             .guid(checklistItemEntity.getGuid())
             .description(checklistItemEntity.getDescription())
             .deadline(checklistItemEntity.getDeadline())
+            .postedDate(checklistItemEntity.getPostedDate())
             .isCompleted(checklistItemEntity.getIsCompleted())
-            .Category(checklistItemEntity.getCategory())
+            .category(checklistItemEntity.getCategory() != null ? 
+                CategoryDTO.builder()
+                    .guid(checklistItemEntity.getCategory().getGuid())
+                    .name(checklistItemEntity.getCategory().getName())
+                .build() : null)
             .build();
     }
 

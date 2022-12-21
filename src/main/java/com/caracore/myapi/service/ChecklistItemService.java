@@ -91,6 +91,7 @@ public class ChecklistItemService {
 
         ChecklistItemEntity checklistItemEntity = new ChecklistItemEntity();
         checklistItemEntity.setGuid(UUID.randomUUID().toString());
+        checklistItemEntity.setIsCompleted(isCompleted);
         checklistItemEntity.setDescription(description);
         checklistItemEntity.setDeadline(deadline);
         checklistItemEntity.setPostedDate(LocalDate.now());
@@ -128,6 +129,23 @@ public class ChecklistItemService {
         log.debug("Deleting checklist item [ guid = {}]", guid);
 
         this.checklistItemRepository.delete(retrievedItem);
+    
+    }
+
+    public void updateIsCompleteStatus(String guid, boolean isComplete) {
+
+        if (!StringUtils.hasText(guid)) {
+            throw new IllegalArgumentException("Guid cannot be empty or null");
+        }
+
+        ChecklistItemEntity retrievedItem = this.checklistItemRepository.findByGuid(guid)
+        .orElseThrow(() -> new ResourceNotFoundException("Checklist Item not found"));
+
+        log.debug("Updating checklist item completed status [ guid = {}, isComplete = {} ]", guid, isComplete);
+
+        retrievedItem.setIsCompleted(isComplete);
+
+        this.checklistItemRepository.save(retrievedItem);
     
     }
 

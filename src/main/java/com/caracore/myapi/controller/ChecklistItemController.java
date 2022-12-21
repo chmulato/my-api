@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.caracore.myapi.dto.ChecklistItemDTO;
 import com.caracore.myapi.dto.GuidDTO;
+import com.caracore.myapi.dto.UpdateStatusDTO;
 import com.caracore.myapi.entities.ChecklistItemEntity;
 import com.caracore.myapi.exception.ValidationException;
 import com.caracore.myapi.service.ChecklistItemService;
@@ -74,6 +76,12 @@ public class ChecklistItemController {
     public ResponseEntity<Void> deleteChecklistItem(@PathVariable String guid) {
         this.checklistItemService.deleteChecklistItem(guid);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PatchMapping(value="{guid}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> updateCompletedStatus(@PathVariable String guid, @RequestBody UpdateStatusDTO status) {
+        this.checklistItemService.updateIsCompleteStatus(guid, status.isComplete());
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
 }
