@@ -11,6 +11,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class UpdateStatusDTO {
     
-    private boolean isComplete;
+    private Boolean isComplete;
     
 }
