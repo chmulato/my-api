@@ -22,6 +22,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import com.caracore.myapi.MyApiApplication;
 import com.caracore.myapi.entities.CategoryEntity;
 import com.caracore.myapi.entities.ChecklistItemEntity;
+import com.caracore.myapi.exception.ResourceNotFoundException;
 import com.caracore.myapi.repository.CategoryRepository;
 import com.caracore.myapi.repository.ChecklistItemRepository;
 
@@ -70,5 +71,26 @@ public class ChecklistItemServiceTest {
             && checklistItemEntityArg.getGuid() != null)
         );
     }
+
+    @Test
+    public void shouldThrownAnExceptionWhenCategoryIsEmptyOrNull() {
+
+        //having
+        String description = "Pessoal";
+        Boolean isCompleted = Boolean.FALSE;
+        LocalDate deadline = LocalDate.of(2022, 12, 12);
+        String categoryGuid = UUID.randomUUID().toString();
+
+        //when
+        when(categoryRepository.findByGuid(categoryGuid)).thenReturn(Optional.empty());
+
+        Exception exception =
+            Assertions.assertThrows(ResourceNotFoundException.class, () -> this.checklistItemService.addNewChecklistItem(description, isCompleted, deadline, categoryGuid));
+
+            Assertions.assertEquals("category not found", exception.getMessage());
+    
+    }
+
+    
     
 }
