@@ -51,23 +51,30 @@ public class ChecklistItemService {
 
     public ChecklistItemEntity updateChecklistItem(String guid, String description, Boolean isCompleted, LocalDate deadline, CategoryDTO categoryDTO) {
 
+        ChecklistItemEntity updatedItem = new ChecklistItemEntity();
+
         if (!StringUtils.hasText(guid)) {
             throw new IllegalArgumentException("Guid cannot be empty or null");
         }
 
-        ChecklistItemEntity retrievedItem = this.checklistItemRepository.findByGuid(guid)
-        .orElseThrow(() -> new ResourceNotFoundException("Checklist Item not found"));
+        Optional<ChecklistItemEntity> retrievedEntity = this.checklistItemRepository.findByGuid(guid);
+        
+        if (retrievedEntity.isPresent()) {
+            updatedItem = retrievedEntity.get();
+        } else {
+            throw new ResourceNotFoundException("Checklist Item not found");
+        }
 
         if (StringUtils.hasText(description)) {
-            retrievedItem.setDescription(description);
+            updatedItem.setDescription(description);
         }
 
         if (isCompleted != null) {
-            retrievedItem.setIsCompleted(isCompleted);
+            updatedItem.setIsCompleted(isCompleted);
         }
 
         if (deadline != null) {
-            retrievedItem.setDeadline(deadline);
+            updatedItem.setDeadline(deadline);
         }
 
         String guidCategory = categoryDTO.getGuid();
@@ -77,17 +84,18 @@ public class ChecklistItemService {
             Optional<CategoryEntity> retrievedCategory = this.categoryRepository.findByGuid(guidCategory);
 
             if (retrievedCategory.isPresent()) {
-                retrievedItem.setCategory(retrievedCategory.get());
+                updatedItem.setCategory(retrievedCategory.get());
             }
-            else {
+            else
+            {
                 throw new ResourceNotFoundException("Category not found");
             }
         
         }
 
-        log.debug("Updating checklist item [ checklistItem = {} ]", retrievedItem);
-
-        return checklistItemRepository.save(retrievedItem);
+        log.debug("Updating checklist item [ checklistItem = {} ]", updatedItem);
+    
+        return checklistItemRepository.save(updatedItem);
     
     }
 
