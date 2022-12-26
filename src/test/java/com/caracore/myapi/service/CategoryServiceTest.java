@@ -120,7 +120,7 @@ public class CategoryServiceTest {
     }
 
     @Test
-    public void shouldThrownAnExceptionWhenTryToUpdateAndCategoryAndItDaesNotExist() {
+    public void shouldThrownAnExceptionWhenTryToUpdateAndCategoryAndItDoesNotExist() {
 
         when(categoryRepository.findByGuid(anyString())).thenReturn(Optional.empty());
 

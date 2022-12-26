@@ -141,6 +141,66 @@ public class ChecklistItemServiceTest {
         
     }
 
+    @Test
+    public void shouldThrownAnExceptionWhenTryToUpdateAndGuidOfChecklistItemIsEmptyOrNull() {
+
+        //having
+        String guid = null;
+        String description = "Teste";
+        Boolean isCompleted = Boolean.TRUE;
+        LocalDate deadline = LocalDate.of(2022, 12, 12);
+
+        String guidCategory = UUID.randomUUID().toString();
+        String name = "Pessoal";
+
+        CategoryEntity categoryEntity = new CategoryEntity();
+        categoryEntity.setCategoryId(1L);
+        categoryEntity.setGuid(guidCategory);
+        categoryEntity.setName(name);
+
+        CategoryDTO categoryDTO = CategoryDTO.toDTO(categoryEntity);
+
+        //then
+        Exception exception =
+            Assertions.assertThrows(IllegalArgumentException.class, () -> 
+            this.checklistItemService.updateChecklistItem(guid, description, isCompleted, deadline, categoryDTO));
+
+            Assertions.assertEquals("Guid cannot be empty or null", exception.getMessage());
     
+    }
+    
+    @Test
+    public void shouldThrownAnExceptionWhenTryToUpdateAndChecklistItemAndItDoesNotExist() {
+
+        //having
+        String guid = UUID.randomUUID().toString();
+        String description = anyString();
+        Boolean isCompleted = Boolean.TRUE;
+        LocalDate deadline = LocalDate.of(2022, 12, 12);
+
+        String guidCategory = UUID.randomUUID().toString();
+        String name = "Pessoal";
+
+        CategoryEntity categoryEntity = new CategoryEntity();
+        categoryEntity.setCategoryId(1L);
+        categoryEntity.setGuid(guidCategory);
+        categoryEntity.setName(name);
+
+        CategoryDTO categoryDTO = CategoryDTO.toDTO(categoryEntity);
+
+        Optional<ChecklistItemEntity> retrievedChecklistItem = null;
+
+        //when
+        when(checklistItemRepository.findByGuid(guid)).thenReturn(retrievedChecklistItem);
+
+        //then
+        Exception exception =
+            Assertions.assertThrows(ResourceNotFoundException.class, () -> 
+            this.checklistItemService.updateChecklistItem(guid, description, isCompleted, deadline, categoryDTO));
+
+            Assertions.assertEquals("Checklist Item not found", exception.getMessage());
+    
+    }
+
     
 }

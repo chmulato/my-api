@@ -59,7 +59,7 @@ public class ChecklistItemService {
 
         Optional<ChecklistItemEntity> retrievedEntity = this.checklistItemRepository.findByGuid(guid);
         
-        if (retrievedEntity.isPresent()) {
+        if (retrievedEntity != null && retrievedEntity.isPresent()) {
             updatedItem = retrievedEntity.get();
         } else {
             throw new ResourceNotFoundException("Checklist Item not found");
@@ -83,7 +83,7 @@ public class ChecklistItemService {
 
             Optional<CategoryEntity> retrievedCategory = this.categoryRepository.findByGuid(guidCategory);
 
-            if (retrievedCategory.isPresent()) {
+            if (retrievedCategory != null && retrievedCategory.isPresent()) {
                 updatedItem.setCategory(retrievedCategory.get());
             }
             else
@@ -157,7 +157,7 @@ public class ChecklistItemService {
 
         Optional <ChecklistItemEntity> retrievedItem = this.checklistItemRepository.findByGuid(guid);
 
-        if (retrievedItem.isPresent()) {
+        if (retrievedItem != null && retrievedItem.isPresent()) {
             
             ChecklistItemEntity checklistItemEntity = retrievedItem.get();
 
