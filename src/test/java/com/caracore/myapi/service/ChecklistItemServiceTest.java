@@ -170,7 +170,7 @@ public class ChecklistItemServiceTest {
     }
     
     @Test
-    public void shouldThrownAnExceptionWhenTryToUpdateChecklistItemAndChecklistItemAndItDoesNotExist() {
+    public void shouldThrownAnExceptionWhenTryToUpdateChecklistItemAndChecklistItemDoesNotExist() {
 
         //having
         String guid = UUID.randomUUID().toString();
