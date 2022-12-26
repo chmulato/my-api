@@ -142,7 +142,7 @@ public class ChecklistItemServiceTest {
     }
 
     @Test
-    public void shouldThrownAnExceptionWhenTryToUpdateAndGuidOfChecklistItemIsEmptyOrNull() {
+    public void shouldThrownAnExceptionWhenTryToUpdateChecklistItemAndGuidOfChecklistItemIsEmptyOrNull() {
 
         //having
         String guid = null;
@@ -170,7 +170,7 @@ public class ChecklistItemServiceTest {
     }
     
     @Test
-    public void shouldThrownAnExceptionWhenTryToUpdateAndChecklistItemAndItDoesNotExist() {
+    public void shouldThrownAnExceptionWhenTryToUpdateChecklistItemAndChecklistItemAndItDoesNotExist() {
 
         //having
         String guid = UUID.randomUUID().toString();
@@ -201,6 +201,47 @@ public class ChecklistItemServiceTest {
             Assertions.assertEquals("Checklist Item not found", exception.getMessage());
     
     }
-
     
+    @Test
+    public void shouldThrownAnExceptionWhenTryToUpdateChecklistItemAndCategoryOfChecklistItemDoesNotExist() {
+
+        //having
+        String guid = UUID.randomUUID().toString();
+        String description = anyString();
+        Boolean isCompleted = Boolean.TRUE;
+        LocalDate deadline = LocalDate.of(2022, 12, 12);
+
+        String guidCategory = UUID.randomUUID().toString();
+        String name = "Pessoal";
+
+        CategoryEntity categoryEntity = new CategoryEntity();
+        categoryEntity.setCategoryId(1L);
+        categoryEntity.setGuid(guidCategory);
+        categoryEntity.setName(name);
+
+        CategoryDTO categoryDTO = CategoryDTO.toDTO(categoryEntity);
+
+        ChecklistItemEntity retrievedChecklistItem = new ChecklistItemEntity();
+        retrievedChecklistItem.setGuid(guid);
+        retrievedChecklistItem.setDescription(description);
+        retrievedChecklistItem.setIsCompleted(!isCompleted);
+        retrievedChecklistItem.setDeadline(deadline);
+        retrievedChecklistItem.setCategory(categoryEntity);
+
+        Optional<ChecklistItemEntity> retrievedItem = Optional.of(retrievedChecklistItem);
+        Optional<CategoryEntity> categoryItem = null;
+
+        //when
+        when(checklistItemRepository.findByGuid(guid)).thenReturn(retrievedItem);
+        when(categoryRepository.findByGuid(guidCategory)).thenReturn(categoryItem);
+
+        //then
+        Exception exception =
+            Assertions.assertThrows(ResourceNotFoundException.class, () -> 
+            this.checklistItemService.updateChecklistItem(guid, description, isCompleted, deadline, categoryDTO));
+
+            Assertions.assertEquals("Category not found", exception.getMessage());
+    
+    }
+
 }
