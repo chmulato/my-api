@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import javax.validation.ValidationException;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +23,6 @@ import com.caracore.myapi.dto.CategoryDTO;
 import com.caracore.myapi.dto.GuidDTO;
 import com.caracore.myapi.entities.CategoryEntity;
 import com.caracore.myapi.service.CategoryService;
-
-import jakarta.validation.ValidationException;
 
 @RestController
 @RequestMapping("/v1/api/categories")

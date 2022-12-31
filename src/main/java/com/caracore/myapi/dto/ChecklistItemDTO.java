@@ -4,8 +4,8 @@ import java.time.LocalDate;
 
 import com.caracore.myapi.entities.ChecklistItemEntity;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 

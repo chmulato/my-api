@@ -2,7 +2,12 @@ package com.caracore.myapi.exception;
 
 public class ValidationException extends RuntimeException {
 
-    public ValidationException(String message) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public ValidationException(String message) {
         super(message);
     }
     

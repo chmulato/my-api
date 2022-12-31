@@ -2,7 +2,7 @@ package com.caracore.myapi.dto;
 
 import com.caracore.myapi.entities.CategoryEntity;
 
-import jakarta.validation.constraints.NotBlank;
+import javax.validation.constraints.NotBlank;
 import lombok.Builder;
 import lombok.Getter;
 
