@@ -20,7 +20,7 @@ public class MyApiApplication {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/**")
-					.allowedOrigins("http://caracore.com.br/app")
+					.allowedOrigins("http://www.caracore.com.br/app")
 					.allowedMethods("GET", "PUT", "OPTIONS", "POST", "DELETE", "PATCH")
 					.maxAge(900)
 					.allowedHeaders("Origin", "X-Requested-With", "Content-Type", "Accept", "Authorization");
