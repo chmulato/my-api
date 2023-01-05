@@ -21,7 +21,7 @@ public class MyApiApplication extends SpringBootServletInitializer {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/**")
-					.allowedOrigins("http://www.caracore.com.br/app")
+					.allowedOrigins("https://www.caracore.com.br/my-app")
 					.allowedMethods("GET", "PUT", "OPTIONS", "POST", "DELETE", "PATCH")
 					.maxAge(900)
 					.allowedHeaders("Origin", "X-Requested-With", "Content-Type", "Accept", "Authorization");

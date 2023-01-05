@@ -9,6 +9,7 @@
 		<version>2.1.1.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
+	
 	<groupId>com.caracore</groupId>
 	<artifactId>my-api</artifactId>
 	<version>1.0.0</version>
@@ -16,7 +17,9 @@
 	<name>my-api</name>
 	<description>Project for Spring Boot</description>
 	<properties>
-		<java.version>1.8</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding> 
+        <project.build.outputEncoding>UTF-8</project.build.outputEncoding> 
+ 		<java.version>1.8</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -56,6 +59,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
+					<outputDirectory>${build.directory}/classes/static/</outputDirectory>
 					<encoding>UTF-8</encoding>
 					<skipTests>true</skipTests>
 					<excludes>
